@@ -23,6 +23,7 @@ This proposal aims to answer the following questions: Do mothers work more if th
 In other words, how large is the treatment effect of childcare services on mothers' labor supply?
 To estimate, I suggest using the introduction of optional separate surnames as a natural experiment, which has not been introduced in Japan yet.
 The estimation design I use is the randomized assignment with incomplete compliance; the announcement of the introduction of optional separate surnames is the random assignment of treatment, the use of childcare service is the take-up of treatment, and mothers' labor supply is the outcome.
+The necessary dataset is the large-scale survey of Comprehensive Survey of Living Conditions, which is conducted every three years by the Ministry of Health, Labour and Welfare.
 
 
 The remainder of this proposal is organized as follows. 
@@ -41,17 +42,19 @@ It is important to provide an environment where mothers can work while raising c
 In this context, the effectiveness of childcare services is a key issue. 
 Expanding childcare services is expected to reduce mothers' burden of child-rearing and increase their labor supply.
 In fact, the supply of childcare services has been increasing, according to the Children and Families Agency. 
-However, increasing its supply requires a large budget, so evaluating its effectiveness is integral.
+However, the fill rate of capacity is still around 90\%, which means that the supply is not enough to meet the demand.
+Also, increasing its supply requires a large budget, so evaluating its effectiveness is integral.
 
 
 A wide range of studies estimate the effect of childcare services on mothers' labor supply.
 \cite{Baker2008-vt} is one of the most famous studies. 
 They use the introduction of childcare services in Quebec, Canada, and show that the policy increased mothers' labor supply.
-However, existing studies show mixed results and one difficulty in estimating the effect is the endogeneity problem.
+Also, \cite{kondo2024} shows that the take-up of accredited childcare services, which is a main type of childcare services in Japan, increases mothers' labor supply using an administrative dataset.
+However, results on the causal effect are mixed and one difficulty in estimating the effect is the endogeneity problem.
 Mothers who want to work more are likely to be more enthusiastic about applying for childcare services.
 Also, it is the government that decides the supply of childcare services. 
 The government which increases the supply of childcare services is more likely to implement other policies promoting mothers' labor supply.
-If we ignore these endogeneities, the estimated effect of childcare services could be overestimated.
+If I ignore these endogeneities, the estimated effect of childcare services could be overestimated.
 
 
 This paper suggests using the introduction of optional separate surnames as an instrument to deal with the endogeneity problem and estimate the treatment effect of childcare services on mothers' labor supply.
@@ -71,7 +74,7 @@ As a result, children whose parents get pregnant just before the announcement ar
 
 This reduction of coetaneous children leads to an exogenous decline in demand for childcare services.
 Hence, mothers who have children just before the announcement have better access to childcare services due to the exogenous slack of demand.
-Using this exogenous variation, we can estimate the effect of childcare services on mothers' labor supply. 
+Using this exogenous variation, I can estimate the effect of childcare services on mothers' labor supply. 
 
 
 Of course, there is no study which uses the introduction of optional separate surnames in Japan as an instrument.
@@ -96,11 +99,11 @@ In this proposal, I assume the lag to be twelve months, but the actual lag could
 Figure \ref{fig:timeline} shows the timeline of the policy announcement and implementation.
 
 \begin{figure}[htbp]
-\scalebox{0.8}{
+\scalebox{1.2}{
 \begin{tikzpicture}
 
   % Draw the main timeline
-  \draw[->,ultra thick] (0,0) -- (18,0);
+  \draw[->,ultra thick] (0,0) -- (12.5,0);
   % \draw[->] (0,3) -- (18,3);
   
   % Annotations on the top line
@@ -112,29 +115,33 @@ Figure \ref{fig:timeline} shows the timeline of the policy announcement and impl
   \draw (9,3.2-2-0.5) -- (9,2.8-3-0.5);
   
   % Pregnant and birth labels on the top line
-  \node[below] at (3, 2.5-0.5) {pregnant};
-  \node[above] at (8, 2.5-0.5) {birth};
-  \node[below] at (9, 2.5-0.5) {pregnant};
-  \node[above] at (14, 2.5-0.5) {birth};
+  \node[above,yshift=2pt] at (3, 2.5-0.5) {\footnotesize pregnancy};
+  \node[above,yshift=2pt] at (8, 2.5-0.5) {\footnotesize birth};
+  \draw[decorate, decoration={brace, amplitude=10pt}] (3,2) -- (8,2) node[midway, above,yshift=6pt] {9 months};
+  % \node[above,yshift=2pt] at (9, 2.5-0.5) {pregnancy};
+  % \node[above,yshift=2pt] at (14, 2.5-0.5) {birth};
+  % \draw[decorate, decoration={brace, amplitude=10pt}] (9,2) -- (14,2) node[midway, above,yshift=6pt] {9 months};
   \fill (3, 2.5-0.5) circle (2pt);
   \fill (8, 2.5-0.5) circle (2pt);
-  \fill (9, 2.5-0.5) circle (2pt);
-  \fill (14, 2.5-0.5) circle (2pt);
+  % \fill (9, 2.5-0.5) circle (2pt);
+  % \fill (14, 2.5-0.5) circle (2pt);
   \draw[->,dashed] (3, 2.5-0.5) -- (8, 2.5-0.5);
-  \draw[->,dashed] (9, 2.5-0.5) -- (14, 2.5-0.5);
+  % \draw[->,dashed] (9, 2.5-0.5) -- (14, 2.5-0.5);
   \draw[dotted,thick] (8, 2.5-0.5) -- (8, 0);
-  \draw[dotted,thick] (14, 2.5) -- (14, 0);
+  % \draw[dotted,thick] (14, 2.5-0.5) -- (14, 0);
+  \draw[dotted,thick] (3, 2.5-0.5) -- (3, 0);
+  % \draw[dotted,thick] (9, 2.5-0.5) -- (9, 0);
 
   \draw[decorate, decoration={brace, amplitude=10pt}] (0,0) -- (2,0) node[midway, above,yshift=6pt,magenta] {$h$ months};
   \draw[decorate, decoration={brace, amplitude=10pt}] (6,0) -- (8,0) node[midway, above,yshift=6pt,blue] {$h$ months};
-  \draw[decorate, decoration={brace, amplitude=10pt}] (12,0) -- (14,0) node[midway, above,yshift=6pt] {$h$ months};
-  \node[above,magenta] at (18,3) {control group};
-  \node[below,blue] at (18,3) {treatment group};
+  % \draw[decorate, decoration={brace, amplitude=10pt}] (12,0) -- (14,0) node[midway, above,yshift=6pt] {$h$ months};
+  \node[above,magenta] at (12,2) {\footnotesize control group};
+  \node[below,blue] at (12,2) {\footnotesize treatment group};
   
   % Lower timeline labels
-  \node at (0, -0.5) {April};
-  \node at (6, -0.5) {April};
-  \node at (12, -0.5) {April};
+  \node at (0, -0.5) {\footnotesize April};
+  \node at (6, -0.5) {\footnotesize April};
+  \node at (12, -0.5) {\footnotesize April};
   \draw[ultra thick] (0, 0.2) -- (0, -0.2);
   \draw[ultra thick] (6, 0.2) -- (6, -0.2);
   \draw[ultra thick] (12, 0.2) -- (12, -0.2);
@@ -142,7 +149,7 @@ Figure \ref{fig:timeline} shows the timeline of the policy announcement and impl
   % Labels for cohort periods
   \draw[decorate, decoration={brace, amplitude=10pt, mirror}] (0.1,-1) -- (5.9,-1) node[midway, below,yshift=-10pt] {year $T-1$};
   \draw[decorate, decoration={brace, amplitude=10pt, mirror}] (6.1,-1) -- (11.9,-1) node[midway, below,yshift=-10pt] {year $T$};
-  \draw[decorate, decoration={brace, amplitude=10pt, mirror}] (12.1,-1) -- (17.9,-1) node[midway, below,yshift=-10pt] {year $T+1$};
+  % \draw[decorate, decoration={brace, amplitude=10pt, mirror}] (12.1,-1) -- (17.9,-1) node[midway, below,yshift=-10pt] {year $T+1$};
   
   \end{tikzpicture}
 }
@@ -150,13 +157,16 @@ Figure \ref{fig:timeline} shows the timeline of the policy announcement and impl
   \label{fig:timeline}
 \end{figure}
 
-For simplicity, dismiss the variation in the durations of pregnancy across mothers. 
+I assume that it takes at least nine months from pregnancy to childbirth.
+This is because around 95\% of children are born more than nine months after pregnancy in Japan (\cite{sakata2018}).
 Also, suppose the lag is one year between the announcement and the implementation.
-I denote a fiscal year as year $T$ if a mother who gets pregnant her first child just before the announcement gives birth in that fiscal year.
+% Then, I denote a fiscal year as year $T$ if a mother who gets pregnant her first child just before the announcement gives birth in that fiscal year.
+Then, I denote a fiscal year as year $T$ if the year contains the date of nine months after the announcement.
 I also denote a year before year $T$ as year $T-1$, and a year after year $T$ as year $T+1$, and so on.
+The Figure \ref{fig:timeline} shows the case where the announcement is made later than May, but the classification holds for any month of the announcement.
 
 
-Then, See the mothers whose first child is born in year $T-1$. 
+Then, see the mothers whose first child is born in year $T-1$. 
 All of these mothers are pregnant ``before'' the announcement, so all of them are not affected by the announcement.
 Also, see the mothers whose first child is born in year $T$. 
 Then, mothers whose first child is born in the first some months (denote as $h$ months) are pregnant ``before'' the announcement, and the others are pregnant ``after'' the announcement.
@@ -164,9 +174,9 @@ As a result, due to the postponement of marriage and pregnancy I explained above
 
 
 Based on the argument above, I classify the mothers whose first child is born in the first $h$ months in year $T$ as treatment group, and the mothers whose first child is born in the first $h$ months in year $T-1$ as control group (see Figure \ref{fig:timeline}).
-Then, it is plausible to expect that the distribution of predetermined characteristics of mothers is identical between the treatment and control groups.
+Then, it is plausible to expect that the distribution of predetermined characteristics of mothers is identical between the treatment and control groups\footnote{I can partially test this by balancing test.}.
 Both do not know the policy when deciding pregnancy and their childbirths differ only by a year.
-The only difference is the number of coetaneous children\footnote{we can partially test this by balancing test.}. 
+The only difference is the number of coetaneous children. 
 Compared to the control group, the treatment group has fewer coetaneous children due to the postponement of marriage and pregnancy.
 This reduction in the coetaneous children leads to better access to childcare service. 
 Mothers in the treatment group have better access to childcare service because of the smaller demand and plenty of vacancy. 
@@ -196,14 +206,16 @@ To deal with this endogeneity, I formulate the first stage estimation as follows
   D_i^s = \varphi + \pi Z_i + \vb{X}_i'\vb{\delta} + \eta_i, \label{step1}
 \end{equation}
 where $Z_i$ is the indicator of whether mother $i$ is in the treatment group.
-By estimating \eqref{step 2} and \eqref{step 1} by 2SLS, we can obtain the unbiased and consistent estimate of $\beta$. 
+By estimating \eqref{step2} and \eqref{step1} by 2SLS, I can obtain the unbiased and consistent estimate of $\beta$. 
 
 \subsection*{Validation of Identification Strategy}
 In this subsection, I validate the instrumental variable $Z_i$.
 First, relevance is expected to hold, i.e., $Z_i$ is correlated with $D_i^s$ strongly enough. 
 As \cite{nhk} shows, a large fraction of Japanese people support the introduction of optional separate surnames, and the fraction is larger in the younger generation.
 In addition, the cost of choosing separate surnames is lower for couples who marry after the implementation than for those who marry before the implementation and already share the same surname.
-Therefore, it is plausible to expect that the number of those choosing separate surnames and postponing marriage is not small, so the effect on the number of coetaneous children is significant
+Therefore, it is plausible to expect that the number of those choosing separate surnames and postponing marriage is not small. 
+In addition, according to the Specified Report of Vital Statistics in 2021 by the Ministry of Health, Labour and Welfare, more than 80\% of couples get pregnant their first child after marriage.
+Therefore, a significant number of postponements of pregnancies are expected due to the postponement of marriage, which results in the significant reduction of coetaneous children.
 
 
 Second, the exclusion restriction is expected to hold, i.e., $Z_i$ affects $Y_i^s$ only through $D_i^s$.
@@ -216,6 +228,47 @@ However, I expect this is unlikely because the announcement is not directly rela
 It is not likely that the only one year difference in the timing of announcement affects mothers' labor supply.
 
 \section{Data}
+To conduct the empirical analysis, a cross-sectional dataset is required.
+I enumerate the necessary variables below: 
+\begin{description}
+  \item[Outcome Variable] mothers' labor supply \\ 
+  Either of the working hour, working days, labor force participation, earnings, employment status, and so on.
+  \item[Treatment Variable] use of childcare service of mother's first child 
+  \item[Instrumental Variable] birth month of mother's first child
+  \item[Other Control Variables] predetermined characteristics of mother \\
+  mother's education, age, working experience, husband's income, gender of children, whether grand parents live together, and so on.
+\end{description}
+Especially, the first three variables are indispensable for the estimation. 
+
+
+The first choice of the dataset is Comprehensive Survey of Living Conditions\footnote{See \url{https://www.mhlw.go.jp/toukei/list/20-21.html} for detail.}, which is conducted by the Ministry of Health, Labour and Welfare.
+This survey is conducted every years, and once every three years, a large-scale survey is conducted.
+This large-scale survey contains all information necessary for the estimation.
+For example, it contains the demographic and social information of each household member such as gender, birth year and month, education, earnings, working days and hours, employment status, working experience, and so on.
+In addition, if they have children of preschool age, I can see how they are taken care of: by parents, by grandparents, by accredited childcare service, by non-accredited childcare service, kindergarten, and so on. 
+As a result, I can estimate the treatment effect in detail, taking into account the type of childcare service.
+
+
+The number of observations in the dataset is around 300,000 households and around 700,000 individuals in the large-scale surveys.
+According to Vital Statistics and Comprehensive Survey of Living Conditions, in 2022, the number of marriage is 504,930 while the number of households is about 54,310,000. 
+Roughly estimating, about 1\% of households are married in a year.
+Therefore, in one year of the survey, 3,000 households could be the treatment group or the control group. 
+In addition, since the survey changes the sample every year, I can obtain more observations by pooling the data of multiple years.
+
+
+The questionnaire data of the Comprehensive Survey of Living Conditions can be used for research purposes\footnote{
+  I can use the data for free if I have Kakenhi. 
+  See miripo for detail: \url{https://www.e-stat.go.jp/microdata/data-use}.
+}.
+In sum, I can obtain the necessary dataset with enough sample size and information, and this proposal is feasible if optional separate surnames are implemented in Japan.
+
+
+Although the dataset above is expected to enough, another candidate is tax data from CREPE (Center for Research and Education in Program Evaluation) at the University of Tokyo.
+As a project to promote EBPM, they collect tax data from endorsing municipalities and construct a dataset. 
+The strength of the dataset is its sample size: \cite[Kondo and Fukai]{kondo2023} use the dataset and its sample size for married women is more than 3,000,000. 
+However, it lacks the information on the use of childcare service. 
+\cite{kondo2024} combines the dataset with the administrative data of accredited childcare service, but the data is not available for the public, so it is unclear whether I can use the data or not.
+Therefore, the first choice is the Comprehensive Survey of Living Conditions.
 
 
 
