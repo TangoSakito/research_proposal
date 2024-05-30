@@ -2,7 +2,7 @@
 \usepackage{preamble}
 \usetikzlibrary{decorations.pathreplacing}
 % -- document title --
-\title{Impacts of Childcare Service on Mothers' Labor Supply: \\ 
+\title{Do Childcare Services Increase Mothers' Labor Supply?\\
        Evidence from Optional Separate Surnames in Japan\thanks{
         This proposal is not prepared for the thesis, but I plan to use it if the optional separate surname policy is implemented in Japan.
        }
@@ -19,7 +19,7 @@
 \maketitle
 
 \section{Research Question}
-This proposal aims to answer the following questions: Do mothers work more if they have better access to childcare services? 
+This proposal aims to answer the following question: Do mothers work more if they have better access to childcare services? 
 In other words, how large is the treatment effect of childcare services on mothers' labor supply?
 To estimate, I suggest using the introduction of optional separate surnames as a natural experiment, which has not been introduced in Japan yet.
 The estimation design I use is the randomized assignment with incomplete compliance; the announcement of the introduction of optional separate surnames is the random assignment of treatment, the use of childcare service is the take-up of treatment, and mothers' labor supply is the outcome.
@@ -42,15 +42,16 @@ Providing an environment where mothers can work while raising children is essent
 In this context, the effectiveness of childcare services is a crucial issue. 
 Expanding childcare services is expected to reduce mothers' burden of child-rearing and increase their labor supply.
 According to the Children and Families Agency, the supply of childcare services has been increasing. 
-However, the capacity fill rate is still around 90\%, which means that the supply is insufficient to meet the demand.
-Also, increasing its supply requires a large budget, so evaluating its effectiveness is integral.
+However, the capacity fill rate is still around 90\%
+Increasing its supply is necessary, but it requires a large budget.
+Hence, evaluating its effectiveness is integral.
 
 
 A wide range of studies estimate the effect of childcare services on mothers' labor supply.
 \cite{Baker2008-vt} is one of the most famous studies. 
 They use the introduction of childcare services in Quebec, Canada, and show that the policy increased mothers' labor supply.
 Also, \cite{kondo2024} shows that the take-up of accredited childcare services, a primary type of childcare services in Japan, increases mothers' labor supply using an administrative dataset.
-However, results on the causal effect are mixed, and one difficulty in estimating the effect is the endogeneity problem.
+However, results on the causal effect are mixed across studies, and one difficulty in estimating the effect is the endogeneity problem.
 Mothers who want to work more are likely to be more enthusiastic about applying for childcare services.
 Also, it is the government that decides the supply of childcare services. 
 The government which increases the supply of childcare services is more likely to implement other policies promoting mothers' labor supply.
@@ -92,7 +93,7 @@ In this proposal, I assume that the optional separate surnames policy is impleme
 The critical point is that there exists a lag between the announcement and the implementation.
 Due to this lag, some couples who want to have separate surnames may postpone their marriage until the implementation, which could delay the birth of their children.
 It is plausible to expect a lag because allowing separate surnames requires a wide range of administrative changes.
-In this proposal, I assume the lag to be twelve months, but the actual lag could be longer or shorter if it exists.
+In this proposal, I assume the lag to be twelve months.
 
 \section{Empirical Model}
 \subsection*{Explanation on Sample}
@@ -194,17 +195,25 @@ Then, the causal relationship of interest is
   Y_i^s = \alpha + \beta D_i^s + \vb{X}_i'\vb{\gamma} + \epsilon_i, \label{step2}
 \end{equation}
 where $\vb{X}_i$ is the vector of predetermined characteristics of mother $i$, such as education, birth-month of the child, husband's income, etc.
-$s$ can be 1, 2, 3, and so on.
 
 
 In the equation \eqref{step2}, $\beta$ is the treatment effect of childcare service on mothers' labor supply.
 However, na\"ive OLS returns the biased estimate of $\beta$ because mothers who use childcare services are likely to be more enthusiastic about working.
 To deal with this endogeneity, I formulate the first stage estimation as follows:
 \begin{equation}
-  D_i^s = \varphi + \pi Z_i + \vb{X}_i'\vb{\delta} + \eta_i, \label{step1}
+  D_i^s = \varphi + \kappa Z_i + \vb{X}_i'\vb{\delta} + \eta_i, \label{step1}
 \end{equation}
 where $Z_i$ is the indicator of whether mother $i$ is in the treatment group.
-By estimating \eqref{step2} and \eqref{step1} by 2SLS, I can obtain the unbiased and consistent estimate of $\beta$. 
+By estimating \eqref{step2} and \eqref{step1} by 2SLS, I can obtain the estimate of $\beta$, which represents the causal effect of childcare services on mothers' labor supply.
+Also, I can estimate with different $s$'s. 
+
+
+Or, I can estimate the Intent-to-Treat (ITT) effect just by regressing 
+\begin{equation}
+  Y_i^s = \mu + \pi Z_i + \vb{X}_i'\vb{\theta} + \xi_i, \label{ITT}
+\end{equation}
+and estimating $\pi$.
+This $\pi$ represents the direct effect of the reduction in coetaneous children on mothers' labor supply.
 
 \subsection*{Validation of Identification Strategy}
 In this subsection, I validate the instrumental variable $Z_i$.
@@ -223,22 +232,24 @@ The only possibility of violating the exclusion restriction is the difference in
 For mothers in the treatment group, the announcement is made when they are pregnant, while for mothers in the control group, the announcement is made when they are not pregnant.
 The exclusion restriction is violated if this difference directly affects mothers' labor supply.
 However, I expect this is unlikely because the announcement is not directly related to mothers' labor supply.
-The only one-year difference in the announcement's timing is unlikely to affect mothers' labor supply.
+The only one-year difference in the announcement's timing is unlikely to directly affect mothers' labor supply.
+
+
+Also, there is expected to be no spillover effect of the assignment from treatment group to control group or vice versa.
+In general, in Japan, the capacities of childcare services are separately determined by ages. 
+Therefore, the reduction in the number of coetaneous children in the treatment group does not affect the availability of childcare services for the control group because their ages are different.
 
 \section{Data}
 A cross-sectional dataset is required to conduct the empirical analysis.
 I enumerate the necessary variables below: 
 \begin{description}
   \item[Outcome Variable] mothers' labor supply \\ 
-  Either of the working hours, working days, labor force participation, earnings, employment status, etc.
+  either of the working hours, working days, labor force participation, earnings, employment status, etc.
   \item[Treatment Variable] use of childcare service of mother's first child 
   \item[Instrumental Variable] birth month of mother's first child
   \item[Other Control Variables] predetermined characteristics of mother \\
   mother's education, age, working experience, husband's income, children's gender, whether grandparents live together, etc.
 \end{description}
-The first three variables are indispensable for estimation. 
-
-
 The first choice of the dataset is Comprehensive Survey of Living Conditions\footnote{See \url{https://www.mhlw.go.jp/toukei/list/20-21.html} for detail.}, which is conducted by the Ministry of Health, Labour and Welfare.
 This survey is conducted yearly, and once every three years, a large-scale survey is conducted.
 This large-scale survey contains all the information necessary for the estimation.
@@ -263,7 +274,7 @@ In sum, I can obtain the necessary dataset with enough sample size and informati
 
 Although the dataset above is expected to be enough, tax data from CREPE (Center for Research and Education in Program Evaluation) at the University of Tokyo is another candidate.
 As a project to promote EBPM, they collect tax data from endorsing municipalities and construct a dataset. 
-The strength of the dataset is its sample size: \cite[Kondo and Fukai]{kondo2023} use the dataset, and its sample size for married women is more than 3,000,000. 
+The strength of the dataset is its sample size: \cite{kondo2023} (Kondo and Fukai) use the dataset, and its sample size for married women is more than 3,000,000. 
 However, it lacks information on the use of childcare services. 
 \cite{kondo2024} combines the dataset with the administrative data of accredited childcare services, but the data is not available to the public, so it is unclear whether I can use the data or not.
 Therefore, the first choice is the Comprehensive Survey of Living Conditions.
